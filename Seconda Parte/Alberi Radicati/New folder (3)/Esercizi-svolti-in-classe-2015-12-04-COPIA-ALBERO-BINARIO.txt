@@ -1,0 +1,116 @@
+COPIA-ALBERO-BINARIO(t)
+	/* t2 nuovo albero */
+	t2.root = NULL
+	if (t.root == NULL)
+		return t2
+	/* temp nuovo nodo */
+	temp.parent = NULL
+	temp.left = NULL
+	temp.right = NULL
+	t2.root = temp
+	COPIA-RIC(t.root,t2.root)
+	return t2
+
+COPIA-RIC(n1,n2)  /* n2 ha il parent già settato */
+	n2.info = n1.info
+	if( n1.left != NULL)
+		/* temp nuovo nodo */
+		temp.parent = n2
+		temp.left = NULL
+		temp.right = NULL
+		n2.left = temp
+		COPIA-RIC(n1.left,n2.left)
+
+	if( n1.right != NULL)
+		/* temp nuovo nodo */
+		temp.parent = n2
+		temp.left = NULL
+		temp.right = NULL
+		n2.right = temp
+		COPIA-RIC(n1.right,n2.right)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VISITA-ALBERO-FSFD(n)
+	if (n==NULL) bla bla 
+
+	x=n.left
+	while(x!=NULL)
+			VISITA-ALBERO-FSFD(x)
+
+		x = x.right
+	return bla bla
+
+
+
+
+
+
+
+
+
+
+
+GRADO-MASSIMO(t)
+	return GRADO-MASSIMO-RIC(t.root)
+
+
+GRADO-MASSIMO-RIC(n)
+	if (n==NULL) return 0
+	cont = 0
+	max = 0
+	x=n.left
+	while(x!=NULL)
+		cont = cont + 1
+        max_figlio = GRADO-MASSIMO-RIC(x)
+        if( max_figlio > max)
+        	max = max_figlio
+        x = x.rigth
+    if(cont > max)
+    	return cont
+    else
+    	return max
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BINARIO(t)
+   return BINARIO-RIC(t.root)
+
+BINARIO-RIC(n)
+	if(n==NULL) return TRUE
+	cont = 0
+	binario = TRUE
+	x = n.left
+	while(x!=NULL && binario)
+		cont = cont +1
+		binario = binario && BINARIO-RIC(x)
+		x = x.right
+	return binario && (cont <= 2)

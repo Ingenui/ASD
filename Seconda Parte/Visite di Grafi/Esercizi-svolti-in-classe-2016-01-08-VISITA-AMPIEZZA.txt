@@ -1,0 +1,102 @@
+VERIFICA_ARCO(A,u,v) /* costo Theta(n) */
+    trovato = false
+    x = A[u]
+	while (x != NULL)
+		if x.info == v
+			trovato = true
+		x = x.next
+	return trovato
+
+VERIFICA_NON_ORIENTATO(A,u,v) /* costo Theta(n^3) */
+	for i=0 to A.length-1
+		x = A[i]
+		while x != NULL
+			if (!VERIFICA_ARCO(A,x.info,i))
+				return false
+			x = x.next
+	return true
+
+
+VERIFICA_UNIONE(A1,A2) /* costo Theta(n^3) */
+	for i=0 to A1.length-1
+		for j=0 to A1.length-1
+			if(!(VERIFICA_ARCO(A1,i,j) OR VERIFICA_ARCO(A2,i,j)))
+				return false
+	return true
+
+VERIFICA_UNIONE(A1,A2) /* costo Theta(n^2) */
+    /* B è una matrice di interi con A1.length righe e A1.length colonne */
+	for i=0 to A1.length-1
+		for j=0 to A1.length-1
+    		B[i][j] = 0
+
+	for i=0 to A1.length-1
+        x = A1[i]
+        while x != NULL
+        	B[i][x.info] = 1
+        	x = x.next	
+
+	for i=0 to A2.length-1
+        x = A2[i]
+        while x != NULL
+        	B[i][x.info] = 1
+        	x = x.next
+
+	for i=0 to A1.length-1
+		for j=0 to A1.length-1
+    		if(B[i][j] == 0) 
+    			return false
+   
+	return true
+
+
+IS-CONNECTED(A)
+	for i=0 to A.length-1
+		color[i] = 0
+
+	q = EMPTY-QUEUE()
+	color[0] = 1
+	ENQUEUE(q,0)
+
+	while !IS-EMPTY(q)
+		u = DEQUEUE(q)
+		x = A[u]
+		while x != NULL
+			if(color[x.info] == 0)
+				color[x.info] = 1
+				ENQUEUE(q,x.info)
+			x = x.next
+		color[u] = 2
+    
+    for i=0 to color.length-1
+    	if( color[i] == 0)
+    		return false
+
+    return true
+
+
+DISTANZA(A,v)
+  	for i=0 to A.length-1
+  		color[i] = 0
+  		D[i] = 0
+
+  	q = EMPTY-QUEUE()
+  	color[v] = 1
+  	EUQUEUE(q,v)
+
+  	while !IS-EMPTY(q)
+  		u = DUQUEUE(q)
+  		x = A[u]
+		while x != NULL
+			if(color[x.info] == 0)
+				D[x.info] = D[u]+1
+				color[x.info] = 1
+				ENQUEUE(q,x.info)
+			x = x.next
+		color[u] = 2
+
+    return D
+
+
+
+

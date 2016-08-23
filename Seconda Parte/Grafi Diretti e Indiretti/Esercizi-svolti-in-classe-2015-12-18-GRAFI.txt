@@ -1,0 +1,103 @@
+GRADO_ENTRATA_MEDIO(A)
+	cont = 0
+	for(i=0 to A.length-1)
+		cont = cont + GRADO_ENTRATA(A,i)
+	return cont/A.length
+
+
+GRADO_USCITA_MEDIO(A)
+	cont = 0
+	for(i=0 to A.length-1)
+		cont = cont + GRADO_USCITA(A,i)
+	return cont/A.length
+
+
+GRADO_ENTRATA(A,u)
+	cont = 0
+	for i=0 to A.length-1
+		x = A[i]
+		while (x!=NULL)
+			if (x.info == u)
+				cont = cont+1
+			x = x.next
+	return cont
+
+GRADO_USCITA(A,u)   
+	cont = 0
+	x = A[u]
+	while (x!=NULL)
+		cont = cont+1
+		x = x.next
+	return cont
+
+
+MATRICE(A)  /* A è un array (grafo rappresentato con 
+               liste di adiacenza) */
+    /* B è una matrice A.length x A.length di interi */
+
+    for i=0 to A.length-1
+	    for j=0 to A.length-1
+	    	A[i][j] = 0
+
+    for i=0 to A.length-1
+    	x = A[i]
+    	while(x!=NULL)
+    		B[i,x.info] = 1
+    		x = x.next
+    return B
+
+
+GRAFO_SEMPLICE(A)  /* A è la matrice di adiacenza del grafo */
+	for(i=0 to A.length-1)
+		if (A[i][i] == 1) return FALSE
+	return TRUE
+
+
+GRAFO_SEMPLICE(A)   /* corretto ma inaccettabilmente costoso */
+	for(i=0 to A.length-1)
+		for(j=0 to A.length-1)
+			if (i==j)
+				if (A[i][i] == 1) return FALSE
+ 	return TRUE
+
+
+GRADO_DI_USCITA_MEDIO(A)
+	cont = 0
+	for(i=0 to A.length-1)
+		for(j=0 to A.length-1)
+			cont = cont + A[i,j]
+	return cont/A.length
+
+
+GRADO_USCITA(A,u) /* A matrice, u intero */
+	cont = 0
+	for(i=0 to A.length-1)
+		// if(A[u][i] == 1) cont = cont+1
+		cont = cont + A[u][i]
+	return cont
+
+GRADO_ENTRATA(A,u) /* A matrice, u intero */
+	cont = 0
+	for(i=0 to A.length-1)
+		if(A[i][u] == 1) cont = cont+1
+	return cont
+
+
+LISTE(A)  /* A è una matrice di adiacenza */
+	/* B è un array di riferimenti ad elementi della lista di adiacenza con A.length celle */
+
+	for(i=0 to A.length-1)
+		for(j=0 to A.length-1)
+			if(A[i][j] == 1)
+				ADD(B,i,j) 
+
+	return B
+
+ADD(B,i,j)
+	/* temp nuovo elemento della lista */
+	temp.prev = NULL
+	temp.info = j
+	temp.next = B[i]
+	if(B[i] != NULL)
+		B[i].prev = temp
+	B[i] = temp

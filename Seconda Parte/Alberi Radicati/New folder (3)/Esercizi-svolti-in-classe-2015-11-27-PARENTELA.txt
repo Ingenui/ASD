@@ -1,0 +1,245 @@
+CAMMINO(t,n)
+    L.head = NULL /* L nuova lista */
+	while ( n != NULL )
+		AGGIUNGI-IN-TESTA(L,n.info)
+		n = n.parent
+	return L
+
+PARENTELA(t,n1,n2)
+	L1 = CAMMINO(t,n1)
+	L2 = CAMMINO(t,n2)
+	x = L1.head
+	y = L2.head
+	while ( x != NULL && y != NULL && x.info == y.info)
+		if( x.next != NULL)
+			x.next.prev = NULL
+		L1.head = x.next
+		x = x.next
+
+		if( y.next != NULL)
+			y.next.prev = NULL
+		L2.head = y.next
+		y = y.next
+	c1 = CONTA-ELEMENTI(L1)
+	c2 = CONTA-ELEMENTI(L2)
+	return c1 + c2
+
+CONTA-ELEMENTI(L)
+    cont = 0
+	x = L.head
+	while (x != NULL)
+		cont++
+		x = x.next
+	return cont
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CAMMINO(t,u)
+    L.head = NULL /* L nuova lista */
+	n = TROVA-RIC(t.root,u)
+	while ( n != NULL )
+		AGGIUNGI-IN-TESTA(L,n.info)
+		n = n.parent
+	return L
+
+
+TROVA-RIC(n,u)
+	if (n == NULL) return NULL
+	if (n.info == u) return n
+	l = TROVA-RIC(n.left,u)
+	r = TROVA-RIC(n.right,u)
+	if (l != NULL) return l
+	if (r != NULL) return r
+	return NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CAMMINO(t,u)  /* u è un intero */
+	output = CAMMINO-RIC(t.root,u)
+	if (output == NULL) /*  non ho trovato il nodo 
+							oppure l'albero era vuoto */
+		L.head = NULL /* L nuova lista */
+		return L  /* ritorno una lista vuota */
+	return output
+
+CAMMINO-RIC(n,u)
+	if(n == NULL) return NULL
+	if(n.info == u)
+		L.head = NULL /* L nuova lista */
+		AGGIUNGI-IN-TESTA(L,n.info)
+		return L
+	l = CAMMINO-RIC(n.left,u)
+	r = CAMMINO-RIC(n.right,u)
+	if( l != NULL)
+		AGGIUNGI-IN-TESTA(l,n.info)
+		return l
+	if( r != NULL)
+		AGGIUNTI-IN-TESTA(r,n.info)
+		return r
+    return NULL
+
+AGGIUNGI-IN-TESTA(L,u)
+	temp.info = u  /* temp è un nuovo elemento della lista */
+	temp.prev = NULL
+	temp.next = L.head
+	if( L.head != NULL )
+		L.head.prev = temp
+	L.head = temp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+VALORE-NONNO(t)
+	return VALORE-NONNO-RIC(t.root)
+
+
+VALORE-NONNO-RIC(n)
+	if (n == NULL) return 0
+	l = VALORE-NONNO-RIC(n.left)
+	r = VALORE-NONNO-RIC(n.right)
+	if(VERIFICA(n))
+		return r + l + 1
+	return l + r
+
+
+VERIFICA(n)  /* n != NULL */
+	if(n.parent != NULL)
+		if( n.parent.parent != NULL)
+			if (n.info == n.parent.parent.info )
+				return TRUE
+    return FALSE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PARENTETICA-SIMMETRICA(t)
+	PARENTETICA-RIC(t.root)
+
+
+PARENTETICA-RIC(n)
+	if( n == NULL) 
+		PRINT("()")
+		return
+	PRINT("(")
+	PARENTETICA-RIC(n.left)
+	PRINT(n.info)
+	PARENTETICA-RIC(n.right)
+	PRINT(")")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+POTA(t,h)
+	POTA-RIC(t.root,h,t)
+
+
+
+POTA-RIC(n,h,t) /* n nodo (anche NULL); h = l'altezza a cui 
+					potare; t = albero a cui appartiene n */
+
+    if( n == NULL) return
+    if( h == 0 ) 
+    	POTA(t,n)
+    	return
+    POTA-RIC(n.left,h-1,t)
+    POTA-RIC(n.right,h-1,t)
+
+
+
+

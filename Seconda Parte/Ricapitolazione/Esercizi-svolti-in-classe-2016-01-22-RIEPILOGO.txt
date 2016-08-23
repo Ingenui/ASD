@@ -1,0 +1,105 @@
+DFS(A,u)  /* DFS con matrice di adiacenza */
+	for i=0 to A.length-1
+		color[i] = 0
+	DFS(A,u,color)
+
+
+DFS(A,u,color)   /* A matrice di adiacenza */
+	color[u] = 1
+	for i=0 to A.length-1
+		if(A[u][i]==1)
+			if color[i]==0
+				DFS(A,i,color)
+	color[u] = 2
+	
+======================================
+
+DFS(A,u) /* ritorna un array con l'ordine di visita */
+	for i=0 to A.length-1
+		color[i] = 0
+		ordine[i] = -1
+	cont=1
+	DFS_ORDINE(A,u,color,ordine,cont)
+    return ordine
+
+DFS_ORDINE(A,u,color,ordine,cont)
+   color[u] = 1
+   ordine[u] = cont
+   cont = cont+1
+   x = A[u]
+   while x != NULL
+   		if color[x.info] == 0
+   			cont = DFS_ORDINE(A,x.info,color,ordine,cont)
+        x = x.next
+   return cont
+
+=========================================
+
+CAMMINO_MINIMO(A,u,v)
+
+	for i=0 to A.length-1
+		color[i] = 0
+		parent[i] = -1
+
+	color[u] = 1
+	q = EMPTY-QUEUE()
+	ENQUEUE(q,u)
+
+	while(!QUEUE-VOID(q))
+		w = DEUQUEUE(q)
+		x = A[w]
+		while x != NULL
+			if color[x.info] == 0
+				color[x.info] = 1
+				ENQUEUE(q,x.info)
+				parent[x.info] = w
+			x = x.next
+    /*
+    parent[0] = 5    // se 0 è raggiunto da 5 
+    parent[1] = 2    // se 1 è raggiunto da 2 
+    ..
+    parent[u] = -1   // u non ha predecessori
+    ..
+    parent[v] = 10   // se ho raggiunto v dal nodo 10 
+
+    vorrei produrre una lista (u,...,2,1,...,v)    
+    */
+
+    /* L è una nuova lista di interi */
+    L.head = NULL
+    i = v  /* i è un iteratore */
+    while(i != -1)
+    	inserisci_in_testa(L,i)
+    	i = parent[i]
+
+    return L
+
+
+=======================================
+
+Versione alternativa di 
+
+CONNETTI(A)
+	for i=0 to A.length-1
+  		color[i] = 0
+
+  	comp = 0   // contatore delle componenti
+  		for i=0 to A.length-1
+  			if color[i] == 0
+  				comp++
+  				DFS(A,i,color,comp)  // visita e marca con comp
+
+  /* Ora ho l'array color aggiornato con l'indice della componente connessa a cui appartiene ogni nodo e comp è il numero di componenti connesse */
+
+	for i=2 to comp
+		for j=0 to color.length-1
+			if color[j] == i    // il nodo j appartiene 
+			                    // alla componente i
+			      aggiungi_arco(A,0,j)
+			      break
+
+
+
+
+
+

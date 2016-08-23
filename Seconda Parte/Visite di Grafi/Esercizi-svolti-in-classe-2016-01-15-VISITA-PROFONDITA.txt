@@ -1,0 +1,174 @@
+CONNESSO(A)
+	for i=0 to color.length-1 
+	            /* color.length = A.length */
+	    color[i] = 0
+	DFS(A,0,color)
+	for i=0 color.length-1
+		if color[i] == 0
+			return FALSE
+	return TRUE
+
+DFS(A,i,color)
+	color[i] = 1
+	x = A[i]
+	while x != NULL
+		if( color[x.info] == 0)
+			DFS(A,x.info,color)
+		x = x.next
+	color[i] = 2
+
+
+STESSA_COMPONENTE_FORTEMENTE_CONNESSA(A,u,v)
+	for i=0 to color.length-1 
+	    color[i] = 0
+    DFS(A,u,color)
+    if color[v] == 0
+    	return FALSE
+
+    for i=0 to color.length-1 
+	    color[i] = 0
+    DFS(A,v,color)
+    if color[u] == 0
+    	return FALSE
+    
+    return TRUE
+
+COMPONENTI_CONNESSE(A)
+	for i=0 to color.length-1
+		color[i]=0
+
+    cont = 0
+	for i=0 to A.length-1
+		if color[i] == 0
+			cont++
+			DFS(A,i,color)
+    return cont
+
+
+COMPONENTI_CONNESSE_CON_PROPRIETÀ_P(A)
+	for i=0 to color.length-1
+		color[i]=0
+
+    cont = 0
+	for i=0 to A.length-1
+		if color[i] == 0
+			cont++
+			DFS(A,i,color,cont)
+    /*
+    color[0] = 1
+    color[1] = 2
+    color[2] = 1
+    color[3] = 3
+    color[4] = 1
+    ...
+    */
+
+    for i=0 to cont /* per tutte le componenti connesse */
+    	nodi = 0
+    	for j=0 to color.length-1
+    		if color[j]==i
+    			nodi++
+    	if nodi == 10 return TRUE
+    return FALSE
+
+    /* ho controllato se esiste una componente connessa con 10 nodi */			
+
+
+DFS(A,i,color,cont)
+	color[i] = cont
+	x = A[i]
+	while x != NULL
+		if( color[x.info] == 0)
+			DFS(A,x.info,color,cont)
+		x = x.next
+
+/* ritorna un array che contiene per ogni nodo l'indice del nodo 
+   da cui provengo quando lo visito in una DFS */
+		
+ALBERO_RICOPRENTE(A,u)
+	for i=0 to A.length-1
+		color[i] = 0
+		parent[i] = -1
+
+	DFS_PARENT(A,u,color,parent)
+	return parent
+
+
+DFS_PARENT(A,u,color,parent)
+	color[u] = 1
+	x = A[u]
+	while x != NULL
+		if (color[x.info] == 0)
+			parent[x.info] = u
+			DFS_PARENT(A,x.info,color,parent)
+		x = x.next
+
+
+/* calcola un albero ricoprente (modifica della funzione sopra */
+
+ALBERO_RICOPRENTE_2(A,u)
+	for i=0 to A.length-1
+		color[i] = 0
+		parent[i] = -1
+
+	DFS_PARENT(A,u,color,parent)
+	
+	/* temp è un array di A.length posizioni che contiene riferimenti ai nodi dell'albero */
+
+	for i=0 to temp.length-1
+		/* n = nuovo nodo dell'albero */
+		temp[i] = n
+		temp[i].info = i
+		temp[i].parent = NULL
+		temp[i].left = NULL
+		temp[i].right = NULL
+
+    /* t è un nuovo albero di grado arbitrario */
+    t.root = NULL
+
+	for i=0 to parent.length-1
+		if(parent[i]== -1)
+			t.root = temp[i]
+		else
+			temp[i].right = temp[parent[i]].left
+			temp[parent[i]].left = temp[i]
+			temp[i].parent = temp[parent[i]]
+	return t	
+ 
+/* ritorna un array contenente, per ogni nodo, l'ordine con cui è stato raggiunto
+   in una DFS */
+ 
+DFS_ORDINE(A,v)
+	for i=0 to A.length-1
+		color[i]=0
+		ordine[i]=-1
+
+    visitati = 0
+	visitati = DFS_ORDINE2(A,v,color,
+	                       ordine,visitati)
+    return ordine
+
+DFS_ORDINE2(A,v,color,ordine,visitati)
+	visitati++
+	ordine[v] = visitati
+	color[v] = 1
+	x = A[v]
+	while x != NULL
+		if color[x.info] == 0
+			visitati = DFS_ORDINE2(A,x.info,color,ordine,visitati)
+		x = x.next
+    return visitati
+
+
+
+
+
+
+
+
+
+
+
+
+
+

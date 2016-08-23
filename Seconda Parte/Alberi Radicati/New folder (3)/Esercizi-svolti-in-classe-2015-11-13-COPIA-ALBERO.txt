@@ -1,0 +1,30 @@
+COPIA-ALBERO(t)
+  t2.root = NULL   /* t2 nuovo albero */
+  if (t.root == NULL) 
+	return t2
+  temp.parent = NULL      /* temp nuovo nodo */
+  temp.info = t.root.info
+  temp.left = NULL
+  temp.right = NULL
+  t2.root = temp
+  COPIA-SOTTOALBERO-RIC(t.root,temp)
+
+
+  COPIA-SOTTOALBERO-RIC(n1,n2)  /* n1 ed n2 sono entrambi diversi da NULL
+                                   n2.info ed n2.parent sono già aggiornati */
+	if( n1.left != NULL )
+		temp1.parent = n2   /* temp1 nuovo nodo */
+		temp1.info = n1.left.info
+		temp1.left = NULL
+		temp1.right = NULL
+		n2.left = temp1
+		COPIA-SOTTOALBERO-RIC(n1.left,n2.left)
+	if( n1.right != NULL )
+		temp2.parent = n2
+		temp2.info = n1.right.info
+		temp2.left = NULL
+		temp2.right = NULL
+		n2.right = temp2
+		COPIA-SOTTOALBERO-RIC(n1.right,n2.right)
+		
+  
