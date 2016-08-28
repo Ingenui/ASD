@@ -1,0 +1,220 @@
+//main()
+//
+//{
+//
+//	struct student {
+//
+//		int name;
+//
+//		int roll;
+//
+//		struct student *next;
+//
+//	};
+//
+//	struct student *List, *ptr, *back;
+//	struct student *front_half, *back_half;
+//
+//	int N, i, count, middle;
+//
+//	int Sz;
+//
+//	Sz = sizeof(struct student);
+//
+//	printf("\n Enter the number of students in the class ");
+//
+//	scanf_s_s("%d", &N);
+//
+//	/* Take List node */
+//
+//	List = (struct student *) malloc(Sz);
+//
+//	/* Read the data of the List student */
+//
+//	printf("\n Enter the data ");
+//
+//	printf("\n Name : "); scanf_s_s("%d", &List->name);
+//
+//	printf("\n Roll : "); scanf_s_s("%d", &List->roll);
+//
+//	/* point back where List points */
+//
+// 	back = List;
+//	ptr = (struct student *) malloc(Sz);
+//
+//	for (i = 2; i <= N; i++)
+//
+//	{    /* Bring a new node in ptr */
+//
+//		ptr = (struct student *) malloc(Sz);
+//
+//		/* Read Data of next student */
+//
+//		printf("\n Name : "); scanf_s_s("%d", &ptr->name);
+//
+//		printf("\n Roll : "); scanf_s_s("%d", &ptr->roll);
+//
+//		/* Connect Back to ptr */
+//
+//		back->next = ptr;
+//
+//		/* point back where ptr points */
+//
+//		back = ptr;
+//
+//	}  /* Repeat the process */
+//
+//	ptr->next = NULL;
+//
+//	/* Count the number of nodes */
+//
+//	ptr = List; /* Point to the List node */
+//	count = 0;
+//	while (ptr != NULL)
+//	{
+//		count++;
+//		ptr = ptr->next;
+//	}
+//
+//	/* Split the list */
+//	if (count == 1)
+//	{
+//		printf("\n The list cannot be split");
+//		front_half = List;
+//	}
+//	else
+//	{
+//		/* Compute the middle */
+//		if ((count % 2) == 0) middle = count / 2;
+//
+//		else middle = count / 2 + 1;
+//		/* Travel the list and split it */
+//
+//		front_half = List;
+//		ptr = List;
+//		for (i = 1; i <= middle; i++)
+//
+//		{
+//			back = ptr;
+//			ptr = ptr->next;
+//		}
+//		back_half = ptr;
+//		back->next = NULL;
+//	}
+//
+//
+//	// print list 
+//	printf("\n The Data is ");
+//
+//	while (ptr != NULL)
+//
+//	{
+//
+//		printf("\n Name : %d, Roll : %d", ptr->name, ptr->roll); 
+//
+//		/* Point to the next node */
+//
+//		ptr = ptr->next;
+//
+//	}
+//	_getch();
+//
+//}
+
+
+/*int i, max, pos, size;
+scanf_s_s("%d", &size);
+int *list;
+list = (int *)malloc(size * sizeof(int));
+
+for (i = 0; i < size; i++)
+{
+printf("\n Enter Number : ");
+scanf_s_s("%d", (list + i));
+}
+max = *list;
+for (i = 0; i < size; i++)
+{
+if (*(list + i) > max) {
+max = *(list + i);
+pos = i;
+}
+}
+free(list);
+printf("\n Max %d, pos %d", max, pos+1);
+_getch();*/
+
+/*int *p;
+p = (int*)malloc(sizeof(int));
+scanf_s_s("%d",p);
+printf("%d", *p);
+_getch();*/
+
+
+/*struct point
+{
+int x, y;
+} polygon[] = { { 1,2 },{ 1,4 },{ 2,4 },{ 2,2 } };
+
+struct point *ptr;
+
+ptr = polygon;
+
+ptr++;
+
+ptr->x++;
+
+printf("\n %d", ptr->x);
+_getch();	*/
+
+//struct item
+//{
+//	int code;
+//	int quantity;
+//	int cost;
+//};
+//
+//struct item item1;
+//struct item *ptr;
+//ptr = &item1;
+//int i;
+////scanf_s_s("%d",&item1.code);
+////printf("%d", ptr->code);
+//for (i = 0; i < 3; i++) {
+//	scanf_s_s("%d", &*(ptr + i));
+//}
+//printf("%d", ptr->code);
+//printf("%d", ptr->quantity);
+//printf("%d", ptr->cost);
+
+/*char *a[] = { "car","bus" };
+char  *p, *p2;
+p = a[1];
+p2 = a[0];
+printf("%d %d", *(a[1]+1),*(p+2));
+printf("%d %d", *(a[0] + 1), *(p2));
+_getch();*/
+
+
+//void printRev(char c); 
+//
+//void printRev(char car) {
+//	
+//		char c;
+//		if (car != '.') {
+//		scanf_s_s("%c", &c);
+//		printRev(c); 
+//		printf("%c", car);
+//		} 
+//		else return;
+//} 
+//
+//int main() {
+//		
+//			char k;
+//			printf("\nIntrodurre una sequenza terminata da .:\t"); 
+//			scanf_s_s("%c", &k); 
+//			printRev(k); 
+//			printf("\n*** FINE ***\n");
+//			_getch();
+//	}
