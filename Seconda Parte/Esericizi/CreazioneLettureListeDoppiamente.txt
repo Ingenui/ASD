@@ -1,0 +1,78 @@
+// ConsoleApplication2.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <stdio.h>
+
+typedef struct {
+	int data;
+	struct node *next;
+	struct node *prev;
+} node;
+
+struct node *create();
+void stampa(node * L);
+void stampaRev(node * L);
+
+void main()
+{
+	node * List;
+	List = create();
+	stampa(List);
+	stampaRev(List);
+	_getch();
+}
+
+struct node * create()
+{
+	node *List, *ptr, *back;
+	int size, i, Sz;
+	Sz = sizeof(node);
+
+	printf("\n Nodi nella lista: ");
+	scanf_s("%d", &size);
+	if (size == 0) return NULL;
+
+	List = (node *)malloc(Sz);
+	printf("\n Inserisci Info");
+	printf("\n Dati : "); scanf_s("%d", &List->data);
+	List->next = NULL;
+	List->prev = NULL;
+	back = List;
+
+	ptr = (node *)malloc(Sz);
+	for (i = 2; i <= size; i++) {
+		ptr = (node *)malloc(Sz);
+		printf("\n Dati : "); scanf_s("%d", &ptr->data);
+		back -> next = ptr;
+		ptr->prev = back;
+		back = ptr;
+	}
+	ptr->next = NULL;
+	return List;
+}
+
+void stampa(node * L)
+{
+	node * ptr;
+	ptr = L;
+	printf("\nLa lista e ");
+	while (ptr != NULL) {
+		printf("\n%d", ptr->data);
+		ptr = ptr->next;
+	}
+}
+
+void stampaRev(node * L)
+{
+	node *ptr;
+	ptr = L;
+	while (ptr->next != NULL) {
+		ptr = ptr->next;
+	}
+	printf("\nL'ordine inverso e:");
+	while (ptr != NULL) {
+		printf("\n%d", ptr->data);
+		ptr = ptr->prev;
+	}
+}
