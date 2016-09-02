@@ -1,0 +1,187 @@
+// ConsoleApplication2.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <stdio.h>
+
+typedef struct nd{
+	int data;
+	struct nd *next;
+	struct nd *prev;
+} node;
+
+typedef node * nodeP;
+
+nodeP create();
+void stampa(nodeP);
+void stampaRev(nodeP);
+nodeP deleteNode(nodeP *, nodeP, int);
+nodeP insertNodePrima(nodeP *, nodeP, int);
+nodeP insertNodeDopo(nodeP *, nodeP, int);
+
+void main()
+{
+	nodeP List;
+	List = create();
+	stampa(List);
+	//stampaRev(List);
+	int x = 0;
+	printf("\nElemento dopo il quale inserire? ");
+	scanf_s("%d", &x);
+	insertNodeDopo(&List, List,x);
+	stampa(List);
+	_getch();
+}
+
+nodeP create()
+{
+	nodeP List, ptr, back;
+	int size, i, Sz;
+	Sz = sizeof(node);
+
+	printf("\n Nodi nella lista: ");
+	scanf_s("%d", &size);
+	if (size == 0) return NULL;
+
+	List = (nodeP)malloc(Sz);
+	printf("\n Inserisci Info");
+	printf("\n Dati : "); scanf_s("%d", &List->data);
+	List->next = NULL;
+	List->prev = NULL;
+	back = List;
+
+	ptr = (nodeP)malloc(Sz);
+	for (i = 2; i <= size; i++) {
+		ptr = (nodeP)malloc(Sz);
+		printf("\n Dati : "); scanf_s("%d", &ptr->data);
+		back -> next = ptr;
+		ptr->prev = back;
+		back = ptr;
+	}
+	ptr->next = NULL;
+	return List;
+}
+
+void stampa(nodeP L)
+{
+	nodeP ptr;
+	ptr = L;
+	printf("\nLa lista e ");
+	while (ptr != NULL) {
+		printf("\n%d", ptr->data);
+		ptr = ptr->next;
+	}
+}
+
+void stampaRev(nodeP L)
+{
+	nodeP ptr;
+	ptr = L;
+	while (ptr->next != NULL) {
+		ptr = ptr->next;
+	}
+	printf("\nL'ordine inverso e:");
+	while (ptr != NULL) {
+		printf("\n%d", ptr->data);
+		ptr = ptr->prev;
+	}
+}
+
+nodeP deleteNode(nodeP * Head, nodeP L, int key) {
+	nodeP ptr;
+	if (L != NULL){
+		ptr = L;
+		while (ptr != NULL){
+			if (ptr->data == key) {
+				if (ptr->prev == NULL){
+					*Head = ptr->next;
+					ptr->next->prev = NULL;
+					free(ptr);
+					ptr = NULL;
+					return L;
+				}
+				else if (ptr->next == NULL){
+					ptr->prev->next = NULL;
+					free(ptr);
+					ptr = NULL;
+					return L;
+				}
+				else {
+					ptr->prev->next = ptr->next;
+					ptr->next->prev = ptr->prev;
+					free(ptr);
+					ptr = NULL;
+					return L;
+				}
+			}
+			else {
+				ptr = ptr->next; 
+			}
+		}
+	}
+}
+
+nodeP insertNodePrima(nodeP * Head, nodeP L, int key) { //before
+	nodeP ptr, x;
+	x = (nodeP)malloc(sizeof(node));
+	printf("\nDati nuovo nodo? ");
+	scanf_s("%d", &x->data);
+	x->prev = NULL;
+	x->next = NULL;
+
+	if (L != NULL) {
+		ptr = L;
+		while (ptr != NULL) {
+			if (ptr->data == key) {
+				if (ptr->prev == NULL) {
+					x->next = ptr;
+					ptr->prev = x;
+					*Head = x;
+					return L;
+				}
+				else {	
+					x->next = ptr->prev->next;
+					ptr->prev->next = x;
+					x->prev = ptr->prev;
+					ptr->prev = x;
+					return L;
+				}
+			}
+			else {
+				ptr = ptr->next;
+			}
+		}
+	}
+}
+
+nodeP insertNodeDopo(nodeP * Head, nodeP L, int key) { //after
+	nodeP ptr, x;
+	x = (nodeP)malloc(sizeof(node));
+	printf("\nDati nuovo nodo? ");
+	scanf_s("%d", &x->data);
+	x->prev = NULL;
+	x->next = NULL;
+
+	if (L != NULL) {
+		ptr = L;
+		while (ptr != NULL) {
+			if (ptr->data == key) {
+				if (ptr->next == NULL) {
+					x->prev = ptr;
+					ptr->next = x;
+					return L;
+				}
+				else {
+					x->prev = ptr->next->prev;
+					ptr->next->prev = x;
+					x->next = ptr->next;
+					ptr->next = x;
+					return L;
+				}
+			}
+			else {
+				ptr = ptr->next;
+			}
+		}
+	}
+}
