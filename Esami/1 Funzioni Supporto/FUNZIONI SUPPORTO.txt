@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "tree.h"
+#include "record.h"
+#define true 1
+#define false 0
+ 
+/* Restituisce un array con le informazioni dei nodi incontrati nel cammino dalla radice di t al nodo info*/
+int* creaArray(tree t, int info){
+    int *a = calloc(altezzaNodo(t,info),sizeof(int));
+    if(verificaCammino(t,info)){
+        int i = 0;
+        riempiArray(t,a,info,&i);
+    }
+    return a;
+}
+ 
+void riempiArray(tree t,int*res,int info,int*index){
+    if(!isEmpty(t)){
+        res[*index]=t->info;
+        (*index)=(*index)+1;
+        if(t->info!=info){
+            if(verificaCammino(t->sx,info)) riempiArray(t->sx,res,info,index);
+            else riempiArray(t->dx,res,info,index);
+        }
+    }
+}
+ 
+/* restituisce true se i due array di lunghezza m sono uguali */
+boolean confrontaArray(int*a,int*b,int len){
+    int i=0;
+    while(i<len){
+        if(!existInArray(b,a[i],len)) return false;
+        i++;
+    }
+    return true;
+}
+/* Mi dice se esiste un valore in un array */
+boolean existInArray(int *a,int value,int len){
+    int i=0;
+    while(i<len){
+        if(a[i]==value)return true;
+        i++;
+    }
+    return false;
+}
+ 
+/** FUNZIONI RICHIESTE **/
+/* Restituisce true se esiste un cammino da t al nodo v */
+boolean verificaCammino(tree t, int v){
+    if(!isEmpty(t)){
+        if(t->info==v) return true;
+        else return verificaCammino(t->sx,v)||verificaCammino(t->dx,v);
+    }
+    else return false;
+}
+ 
+/* Confronta quanti cammini sono comuni ai due alberi dalla radice */
+int confrontaAlberi(tree t1,tree t2){
+    if(isEmpty(t1)||isEmpty(t2)) return 0;
+    else{
+        int common = 0;
+        rec_confrontaAlberi(t1,t1,t2,&common);
+        return common;
+    }
+}
+ 
+void rec_confrontaAlberi(tree original,tree t1,tree t2,int *common){
+    if(!isEmpty(t1)){
+        rec_confrontaAlberi(original,t1->sx,t2,common);
+        rec_confrontaAlberi(original,t1->dx,t2,common);
+        if(verificaCammino(t2,t1->info)){
+            int altezzaInT1 = altezzaNodo(original,t1->info);
+            if(altezzaInT1==altezzaNodo(t2,t1->info)){
+                int *a=creaArray(original,t1->info);
+                int *b=creaArray(t2,t1->info);
+                if(confrontaArray(a,b,altezzaInT1)) (*common) = (*common)+1;
+            }
+        }
+    }
+}
+ 
+
+/** FUNZIONI DI SUPPORTO NECESSARIE **/
+boolean isEmpty(tree t){
+    return t==NULL;
+}
+ 
+int altezzaNodo(tree t, int info){
+    if(isEmpty(t)) return -1;
+    else{
+        int altezza = 0;
+        return rec_altezzaNodo(t,info,&altezza);
+    }
+}
+ 
+int max(int a,int b){
+    if(a>b) return a;
+    else return b;
+}
+ 
+int rec_altezzaNodo(tree t,int info, int *start){
+    if(!isEmpty(t)){
+        if(t->info==info) return *start;
+        else{
+            int st = (*start)+1;
+            return max(rec_altezzaNodo(t->sx,info,&st),rec_altezzaNodo(t->dx,info,&st));
+        }
+    }
+    else return 0;
+}
+ 
+/** ALTRO **/
+tree newTree(){
+     return NULL;
+}
+ 
+tree initNode(int info){
+    tree t = (tree)malloc(sizeof(node));
+    t->info=info;
+    t->sx=t->dx = NULL;
+    return t;
+}
+ 
+void preorder(tree t){
+    if(!isEmpty(t)){
+        printf("\n %d",t->info);
+        preorder(t->sx);
+        preorder(t->dx);
+    }
+}

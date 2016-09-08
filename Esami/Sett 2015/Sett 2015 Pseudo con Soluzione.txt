@@ -1,0 +1,45 @@
+/** Traccia:
+    Scrivere lo pseudocodice della procedura foo(A) che, preso in input un grafo A,
+    restituisce true se è presente una sola componente connessa
+    o se tutte le componenti connesse hanno lo stesso numero di nodi.
+    Ritorna false altrimenti.
+**/
+ 
+foo(A){
+    for(i=0 to A.lenght-1) color[i] = 0; //Azzero la matrice dei marcatori
+    compConn = 0 ;                      //numero delle componenti connesse
+    for(i=0 to A.lenght-1){
+        if(color[i] == 0){
+            compConn++;
+            DFS(A,i,color,compConn);
+        }
+    }
+    //Ho capito quante componenti connesse ho!
+    if(compConn==1) return true;
+    else{
+        nodiPrimaComponente = 0;    //calcolo il numero di nodi di una componente connessa
+        for(i=0 to color.lenght-1){
+            if(color[i]==1) nodiPrimaComponente++;
+        }
+ 
+        for(i=2 to compConn){   //calcolo i nodi di ogni componente connessa e
+            nodiComponenteCorrente=0;
+            for(j=0 to A.lenght-1){
+                if(color[j]==i) nodiComponenteCorrente++;
+            }
+            if(nodiComponenteCorrente!=nodiPrimaComponente) return false; //lo confronto con la prima
+        }
+   
+        return true;  // se sono arrivato qui tutte le componenti hanno lo stesso numero di nodi!
+    }
+}
+ 
+DFS(A,current,color,compConn){
+        color[current] = compConn;
+        adiacenze=A[current];
+        while(adiacenze!=NULL){
+                adiacenteCorrente=adiacenze.key;
+                if(color[adiacenteCorrente]==0)  DFS(A,adiacenteCorrente,color,compConn);
+                adiacenze = adiacenze.next;
+        }      
+}

@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "tree.h"
+ 
+/** TRACCIA **/
+/** DOMANDA 1 **//*
+    verificaCammino(tree t,int info): verifica se esiste un cammino dalla radice al nodo con il valore info */
+/** DOMANDA 2 **//*
+    confrontaAlberi(tree t1,tree t2): conta il numero di cammini che sono in comune tra i due alberi, ad esempio:
+ 
+                [t1]                           [t2]
+              __15__              |           __15__
+             /      \             |          /      \
+            8        4            |         4        8
+          /         /  \          |        /        / \
+         29        1    5         |       1        29  13
+        /  \                      |      /
+       7    9                     |     5
+ 
+     restituirà 5 perchè i cammini comuni tra la radice t1 e t2 sono [15],[15-8],[15-8-29],[15-4],[15-4-1]; */
+/** DOMANDA 3 **//*
+    scrivere la funzione void modificaFile(tree t) che modifica il file "dati.dat" strutturato in questo modo:
+    3 1 | 4 1 | 5 0
+    dove il primo intero rappresenta il valore di un nodo, il secondo intero rappresenta l'esistenza o meno
+    di un cammino dalla radice dell'albero al nodo con quell'informazione.
+    il file dovrà essere pertanto corretto in:
+    3 0 | 4 1 | 5 1  */
+/** ALTRE INFORMAZIONI **//*
+    Il metodo int* creaArray(tree t,int i) restituisce un array con le informazioni dei nodi incontrati dalla radice di t al nodo con informazione i
+    Il metodo int confrontaArray(int* a, int* b) restituisce 1 se i due array sono uguali, false altrimenti.
+    I due metodi sopra elencati sono già implementati.
+    Si possono definire tutti i metodi di supporto necessari */
+ 
+int main() {
+ 
+    tree t1 = initT1();
+    tree t2 = initT2();
+ 
+    printf("\n 5 = %d ", confrontaAlberi(t1,t2));
+ 
+    return 0;
+}

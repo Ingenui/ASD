@@ -1,0 +1,146 @@
+// ConsoleApplication4.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct NT{
+	int data;
+	struct NT *child, *sibling;
+} node;
+
+typedef node * nodeP; 
+
+nodeP creaNodo();
+void stampa(nodeP);
+int massimo(nodeP);
+int altezza(nodeP);
+int ricerca(nodeP, int);
+int pari(nodeP);
+int numFoglie(nodeP);
+
+void main()
+{
+	nodeP tree;
+	tree = creaNodo();
+	stampa(tree);
+	//printf("\nMax e: %d\n", massimo(tree));
+	//printf("\nTrovato: %d\n", ricerca(tree, 3));
+	//printf("\nTutti Pari: %d\n", pari(tree));
+	/*printf("\nAltezza: %d\n", altezza(tree));*/
+	printf("\nNum Foglie: %d\n", numFoglie(tree));
+    _getch();
+}
+
+nodeP creaNodo() {
+	nodeP T, temp;
+	int key, numSons, k;
+	// key = valore del nodo (data), numSons = numero di figli
+	printf("\nValore nodo ? "); scanf_s("%d",&key);
+	printf("\nNumeroFigli ? "); scanf_s("%d",&numSons);
+
+	T = (nodeP)malloc(sizeof(node));
+
+	if (T == NULL) {
+		printf("memoria non allocata\n");
+	}
+	else {
+		T->data = key;
+		T->sibling = NULL;
+
+		if (numSons == 0) {
+
+			T->child = NULL;
+		}
+		else {
+
+			T->child = creaNodo();
+			temp = T->child;
+
+			for (k = 0; k < numSons - 1; k++)
+			{
+				printf("entrato nel ciclo con valore pari a %d\n", key);
+				temp->sibling = creaNodo();
+				printf("valore mio e del fratello %d %d\n", temp->data, temp->sibling->data);
+				temp = temp->sibling;
+			}
+			
+		}
+		
+	}
+	return T;
+}
+
+void stampa(nodeP root) {
+	nodeP temp;
+	if (root != NULL) {
+		printf("%d, ", root->data);
+		temp = root->child;
+		while (temp != NULL) {
+			stampa(temp);
+			temp = temp->sibling;
+		}
+	}
+}
+
+int massimo(nodeP root) {
+	nodeP temp; int max = root->data, x = 0;
+	if (root != NULL) {
+		temp = root->child;
+		while (temp != NULL) {
+			x = massimo(temp);
+			if (x > max) {
+				max = x;	
+			}
+			temp = temp->sibling;
+		}
+		return max;
+	}
+	return 0;
+}
+
+int altezza(nodeP root) {
+	nodeP temp; int h = 0, x = 0;
+	if (root != NULL) {
+		temp = root->child;
+		while (temp != NULL) {
+			x = altezza(temp);
+			if (x > h) {
+				h = x;
+			}
+			temp = temp->sibling;
+		}
+		return (h+1);
+	}
+	return 0;
+}
+
+int ricerca(nodeP root, int key) {
+	nodeP temp; int trovato = 0;
+	if (root == NULL) { return 0; }
+	if (root->data == key) { return 1; }
+
+		temp = root->child;
+		while (temp != NULL && !trovato) {
+			if (ricerca(temp, key))
+				trovato = 1;
+			temp = temp->sibling;
+		}
+		return trovato;	
+}
+
+int pari(nodeP root)
+{
+	if (!root) return 1;
+	if (root->data % 2) return 0;
+	else return (pari(root->child) && pari(root->sibling));
+}
+
+int numFoglie(nodeP root) {
+	if (root == NULL) return 0;
+	if (root->child == NULL)
+		return 1 + numFoglie(root->sibling);
+	else
+		return (numFoglie(root->child) + numFoglie(root->sibling));
+}
